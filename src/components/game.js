@@ -2,7 +2,9 @@ import React from "react";
 import Board from "./board";
 import { useState } from "react";
 import { useEffect } from "react";
-import { AutoCounter } from "./timer.tsx";
+import StartUp from "./startUp";
+import GameInfo from "./gameInfo";
+import Completed from "./completed";
 
 const genRandInt = (max) => {
   return Math.floor(Math.random() * max);
@@ -107,6 +109,7 @@ const Game = () => {
   const [count, setCount] = useState(10);
   const [correct, setCorrect] = useState(false);
   const [wrong, setWrong] = useState(false);
+  const [done, setDone] = useState(false);
   const [curLevel, setCurLevel] = useState({ level: 1, round: 1 });
   const onClick = (value, index) => {
     if (correct || wrong) return;
@@ -119,6 +122,9 @@ const Game = () => {
     ) {
       console.log("Success", count);
       setCorrect(true);
+      if (curLevel.level === 3 && curLevel.round === 2) {
+        setDone(true);
+      }
     } else {
       setWrong(true);
     }
@@ -158,77 +164,30 @@ const Game = () => {
     <div>
       {ready ? (
         <div id="game">
-          <Board
-            alphas={alphas}
-            onClick={onClick}
-            target={target}
-            solution={solution}
-          />
-          <div id="text">
-            {count > 0 ? (
-              <>
-                <p>Let's Go</p>
-              </>
-            ) : (
-              <>
-                <p>Time UP!</p>
-              </>
-            )}
-            <p>Find the target alphabet " {target} "</p>
-            {correct && !wrong ? (
-              <>
-                <p>Success</p>
-                <button id="main" onClick={onNext}>
-                  Next
-                </button>
-              </>
-            ) : (
-              <>
-                {!wrong && count > 0 ? (
-                  <AutoCounter
-                    count={count}
-                    setCount={setCount}
-                    stopRun={correct}
-                  />
-                ) : (
-                  <>
-                    {wrong ? (
-                      <>
-                        <p>Wrong</p>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                    <button id="main" onClick={() => onRetry()}>
-                      Retry
-                    </button>
-                  </>
-                )}
-              </>
-            )}
-          </div>
+          {!done ? (
+            <>
+              <Board
+                alphas={alphas}
+                onClick={onClick}
+                target={target}
+                solution={solution}
+              />
+              <GameInfo
+                target={target}
+                count={count}
+                correct={correct}
+                wrong={wrong}
+                onNext={onNext}
+                setCount={setCount}
+                onRetry={onRetry}
+              />
+            </>
+          ) : (
+            <Completed />
+          )}
         </div>
       ) : (
-        <>
-          <div id="startUp">
-            <h2>AlphaMania</h2>
-            <button
-              id="main"
-              onClick={() => {
-                setReady(true);
-                setCount(15);
-              }}
-            >
-              Start Game
-            </button>
-            <div>
-              <p>
-                Choose the target alphabet mentioned on the screen from the grid
-                before the timer runs out!
-              </p>
-            </div>
-          </div>
-        </>
+        <StartUp setCount={setCount} setReady={setReady} />
       )}
     </div>
   );

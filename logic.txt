@@ -1,0 +1,20 @@
+The game here is simple.
+A random yet controlled grid of alphabets is generated based on the level the player is in.
+Each time the grid is generated a target variable is picked and is inserted into certain random positions in the grid.
+The target element has to be selected from the grid within the given time to complete the current round.
+
+
+A simple strategy has been used to measure the progress and standard of player.
+There are a 3 levels and each level having 3 rounds.
+When all three rounds are completed then the player is promoted to the next level.
+The difficulty of a level is the proportional to the size of the grid.
+Level one contains an 8X8 grid.
+Level two contains a 12X12 grid.
+Level three contains a 20X20 grid.
+With each of these levels having three rounds.
+In case a correct answer in time, the player is promoted to the next level.
+If there is a wrong answer or the time runs out then the player is demoted to the first round of the current level.
+So three consistent success are required to go to the next level which serves as a effective measure to check the standard of player.
+
+Our game servers as a simple brain tickler and has a wide audiance of different age groups.
+We have approached these people using social media and were able to get considerable number of views.
