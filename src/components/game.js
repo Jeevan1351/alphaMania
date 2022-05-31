@@ -122,7 +122,7 @@ const Game = () => {
     ) {
       console.log("Success", count);
       setCorrect(true);
-      if (curLevel.level === 3 && curLevel.round === 2) {
+      if (curLevel.level === 3 && curLevel.round === 3) {
         setDone(true);
       }
     } else {
